@@ -4,6 +4,7 @@ import com.company.database.FacultyDao;
 import com.company.database.StudentDao;
 import com.company.database.UserDao;
 import com.company.util.Faculty;
+import com.company.util.User;
 
 
 import javax.servlet.ServletException;
@@ -15,24 +16,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-@WebServlet("/create_account")
-public class CreateAccountServlet extends HttpServlet {
-
-    FacultyDao facultyDao;
-    Faculty faculty;
+@WebServlet("/stud_create_account")
+public class StudCreateAccountServlet extends HttpServlet {
+    User user = new User();
+    FacultyDao facultyDao = new FacultyDao();
+    Faculty faculty = new Faculty();
     ArrayList<Faculty> faculties;
-    //ArrayList<String> facultyNames;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        resp.sendRedirect("stud_create_account.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         faculties = facultyDao.getFaculties();
-//        facultyNames = faculty.sortFaculty(faculties);
 
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
@@ -45,9 +44,11 @@ public class CreateAccountServlet extends HttpServlet {
         String password = req.getParameter("password");
         UserDao userDao = new UserDao();
         try {
-            int userId = userDao.createAccount(login, password);
+//            temporary stop-gap
+            int userId = 1;
+            user =  userDao.createAccount(login, password);
             studentDao.createAccount(name, surname, phoneNumber, course, facultyId, userId);
-            resp.getWriter().print("Account was created");
+            resp.getWriter().print("Student account was created");
         } catch (Exception e) {
             System.out.println("Exception" + " " + e.getMessage());
         }

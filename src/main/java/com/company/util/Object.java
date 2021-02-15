@@ -2,15 +2,16 @@ package com.company.util;
 
 import java.util.ArrayList;
 
-public class Faculty {
+public class Object {
     private int id;
     private String name;
 
-    public int sortFaculty(ArrayList<Faculty> arrayList, String studentFaculty) {
+    public int getObjectId(ArrayList<Object> arrayList, String str) {
         int result = 0;
-        for (Faculty f : arrayList) {
-            if (studentFaculty.equals(f.getName())) {
-                result = f.getId();
+
+        for (Object n : arrayList) {
+            if (n.getName().equals(str)) {
+                result = n.getId();
             }
         }
         return result;

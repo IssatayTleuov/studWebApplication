@@ -11,18 +11,17 @@ public class UserDao extends Database{
 
     Connection connection;
 
-    public int createAccount (String login, String password) throws SQLException {
+    public User createAccount (String login, String password) throws SQLException {
         connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
         preparedStatement.setString(1, login);
         preparedStatement.setString(2, password);
-        int row = preparedStatement.executeUpdate();
+        int rows = preparedStatement.executeUpdate();
 
-        if (row == 2) {
-            User user =  new User(login, password);
-            return user.getId();
+        if (rows == 1) {
+            return new User(login, password);
         }
-        return 0;
+        return null;
     }
 
     public boolean logIn(String login, String password) throws SQLException {

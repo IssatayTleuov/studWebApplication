@@ -19,9 +19,9 @@ public class StudentDao extends Database {
         preparedStatement.setInt(4, course);
         preparedStatement.setInt(5, facultyId);
         preparedStatement.setInt(6, userId);
-        int row = preparedStatement.executeUpdate();
+        int rows = preparedStatement.executeUpdate();
 
-        if (row == 6) {
+        if (rows > 0) {
             Student student = new Student(name, surname, phoneNumber, course, facultyId, userId);
         }
     }

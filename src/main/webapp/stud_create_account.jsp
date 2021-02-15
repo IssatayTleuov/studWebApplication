@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Create account</title>
+    <title>Student account creating page</title>
 </head>
 <body>
-<form action="create_account" method="post">
+<form action="stud_create_account" method="post">
         <p><tr>
             <td>Name</td>
             <td><input type="text" name="name"></td>
@@ -30,15 +30,11 @@
     </tr></p>
     <p><tr>
         <td>Faculty</td>
-        <td><input type="number" name="facultyId"></td>
+        <td><input type="text" name="facultyId"></td>
     </tr></p>
-<%--    <p><tr>--%>
-<%--        <td>User</td>--%>
-<%--        <td><input type="number" name="userId"></td>--%>
-<%--    </tr></p>--%>
-        <p><tr>
-    <td>Login</td>
-    <td><input type="text" name="login"></td>
+    <p><tr>
+        <td>Login</td>
+        <td><input type="text" name="login"></td>
     </tr></p>
     <p><tr>
         <td>Password</td>
