@@ -1,6 +1,10 @@
 package com.company.util;
 
+import java.util.ArrayList;
+
 public class Student {
+
+    private int id;
     private String name;
     private String surname;
     private String phoneNumber;
@@ -19,6 +23,25 @@ public class Student {
         this.course = course;
         this.facultyId = facultyId;
         this.userId = userId;
+    }
+
+    public boolean isStudent(ArrayList<Student> arr, User user) {
+        boolean isStudent = false;
+
+        for (Student s : arr) {
+            if (s.getUserId() == user.getId()) {
+                isStudent = true;
+            }
+        }
+        return isStudent;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

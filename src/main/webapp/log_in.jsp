@@ -24,6 +24,10 @@
         <td><input type="submit" name="Login"></td>
     </tr></p>
     </table>
+    <br><br>
+    <a href="teach_create_account.jsp">Create account as teacher</a>
+    <br><br>
+    <a href="stud_create_account.jsp">Create account as student</a>
 </form>
 </body>
 </html>

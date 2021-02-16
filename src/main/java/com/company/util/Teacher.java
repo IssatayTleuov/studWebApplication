@@ -1,5 +1,7 @@
 package com.company.util;
 
+import java.util.ArrayList;
+
 public class Teacher {
     private int id;
     private String name;
@@ -21,6 +23,18 @@ public class Teacher {
         this.facultyId = facultyId;
         this.userId = userId;
     }
+
+    public boolean isTeacher(ArrayList<Teacher> arr, User user) {
+        boolean isTeacher = false;
+
+        for (Teacher t : arr) {
+            if (t.getUserId() == user.getId()) {
+                isTeacher = true;
+            }
+        }
+        return isTeacher;
+    }
+
 
     public int getId() {
         return id;

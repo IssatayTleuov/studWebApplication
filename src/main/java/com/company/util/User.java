@@ -1,5 +1,7 @@
 package com.company.util;
 
+import java.util.ArrayList;
+
 public class User {
     private int id;
     private String login;
@@ -12,6 +14,16 @@ public class User {
     public User(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    public int getUserId(ArrayList<User> userList, User user) {
+        int result = 0;
+        for (User u : userList) {
+            if (u.getLogin().equals(user.getLogin()) && u.getPassword().equals(user.getPassword())) {
+                result = u.getId();
+            }
+        }
+        return result;
     }
 
     public int getId() {

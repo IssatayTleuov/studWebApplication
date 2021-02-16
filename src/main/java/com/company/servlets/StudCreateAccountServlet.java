@@ -19,9 +19,11 @@ import java.util.ArrayList;
 @WebServlet("/stud_create_account")
 public class StudCreateAccountServlet extends HttpServlet {
     User user = new User();
+    UserDao userDao = new UserDao();
     FacultyDao facultyDao = new FacultyDao();
     Faculty faculty = new Faculty();
     ArrayList<Faculty> faculties;
+    ArrayList<User> users;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,9 +46,9 @@ public class StudCreateAccountServlet extends HttpServlet {
         String password = req.getParameter("password");
         UserDao userDao = new UserDao();
         try {
-//            temporary stop-gap
-            int userId = 1;
             user =  userDao.createAccount(login, password);
+            users = userDao.getUsers();
+            int userId = user.getUserId(users, user);
             studentDao.createAccount(name, surname, phoneNumber, course, facultyId, userId);
             resp.getWriter().print("Student account was created");
         } catch (Exception e) {

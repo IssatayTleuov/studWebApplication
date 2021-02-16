@@ -20,12 +20,14 @@ import java.util.ArrayList;
 public class TeachCreateAccountServlet extends HttpServlet {
 
     User user = new User();
+    UserDao userDao = new UserDao();
     Faculty faculty = new Faculty();
     FacultyDao facultyDao = new FacultyDao();
     Object object = new Object();
     ObjectDao objectDao = new ObjectDao();
     ArrayList<Faculty> facultyArrayList;
     ArrayList<Object> objectArrayList;
+    ArrayList<User> userArrayList;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,6 +38,7 @@ public class TeachCreateAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         facultyArrayList = facultyDao.getFaculties();
         objectArrayList = objectDao.getObjects();
+
 
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
@@ -49,9 +52,9 @@ public class TeachCreateAccountServlet extends HttpServlet {
         UserDao userDao = new UserDao();
 
         try {
-//            temporary stop-gap
-            int userId = 1;
             user = userDao.createAccount(login, password);
+            userArrayList = userDao.getUsers();
+            int userId = user.getUserId(userArrayList, user);
             teacherDao.createAccount(name, surname, phoneNumber, objectId, facultyId, userId);
             resp.getWriter().print("Teacher account was created!");
         } catch (Exception e) {

@@ -32,4 +32,22 @@ public class ObjectDao extends Database {
         return objectArrayList;
     }
 
+    public ArrayList<String> getObjectNames() {
+        connection = getConnection();
+        ArrayList<String> namesList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM objects");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                namesList.add(resultSet.getString(1));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return namesList;
+    }
+
 }
