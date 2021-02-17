@@ -3,6 +3,7 @@ package com.company.util;
 import java.util.ArrayList;
 
 public class Teacher {
+
     private int id;
     private String name;
     private String surname;
@@ -10,6 +11,9 @@ public class Teacher {
     private int objectId;
     private int facultyId;
     private int userId;
+
+    int currentTeacherId = 0;
+    int currentTeacherObjId = 0;
 
     public Teacher() {
 
@@ -29,6 +33,8 @@ public class Teacher {
 
         for (Teacher t : arr) {
             if (t.getUserId() == user.getId()) {
+                currentTeacherId = t.getId();
+                currentTeacherObjId = t.getObjectId();
                 isTeacher = true;
             }
         }

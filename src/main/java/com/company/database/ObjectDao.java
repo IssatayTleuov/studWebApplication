@@ -32,16 +32,20 @@ public class ObjectDao extends Database {
         return objectArrayList;
     }
 
-    public ArrayList<String> getObjectNames() {
+    public ArrayList<Object> getObjectNames() {
         connection = getConnection();
-        ArrayList<String> namesList = new ArrayList<>();
+        ArrayList<Object> namesList = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM objects");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM objects");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                namesList.add(resultSet.getString(1));
+                Object object = new Object();
+                object.setId(resultSet.getInt(1));
+                object.setName(resultSet.getString(2));
+
+                namesList.add(object);
             }
 
         } catch (Exception e) {

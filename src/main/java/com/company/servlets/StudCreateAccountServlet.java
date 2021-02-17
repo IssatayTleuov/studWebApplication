@@ -50,7 +50,7 @@ public class StudCreateAccountServlet extends HttpServlet {
             users = userDao.getUsers();
             int userId = user.getUserId(users, user);
             studentDao.createAccount(name, surname, phoneNumber, course, facultyId, userId);
-            resp.getWriter().print("Student account was created");
+            resp.sendRedirect("stud_home_page.jsp");
         } catch (Exception e) {
             System.out.println("Exception" + " " + e.getMessage());
         }

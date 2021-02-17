@@ -56,7 +56,7 @@ public class TeachCreateAccountServlet extends HttpServlet {
             userArrayList = userDao.getUsers();
             int userId = user.getUserId(userArrayList, user);
             teacherDao.createAccount(name, surname, phoneNumber, objectId, facultyId, userId);
-            resp.getWriter().print("Teacher account was created!");
+            resp.sendRedirect("teach_home_page.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
