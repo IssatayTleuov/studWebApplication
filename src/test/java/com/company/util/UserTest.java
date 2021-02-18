@@ -25,7 +25,7 @@ public class UserTest {
         ArrayList<User> arrayList = new ArrayList<>();
         UserDao userDao = new UserDao();
         arrayList = userDao.getUsers();
-        User user = new User("student05@email.com", "lmlj7894");
+        User user = new User("student05@email.com", "lmlj7894", "e20bd112-ec76-46c9-9d72-c3f5e941e588");
         Assert.assertEquals(29, user.getUserId(arrayList, user));
         System.out.println("user_id is correct!");
         } catch (Exception e) {

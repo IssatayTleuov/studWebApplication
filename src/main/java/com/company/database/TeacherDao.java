@@ -59,5 +59,23 @@ public class TeacherDao extends Database {
         }
         return arrayList;
     }
+    public int[] getObjAndTeachId (int userId) {
+        connection = getConnection();
+        int[] idList = new int[2];
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, object_id FROM teachers WHERE user_id = ?");
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                idList[0] = resultSet.getInt(1);
+                idList[1] = resultSet.getInt(2);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idList;
+    }
 }

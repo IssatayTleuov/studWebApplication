@@ -13,7 +13,7 @@
 <body>
 <label>Welcome teacher</label>
 <br><br><br>
-<form action="put_rating.jsp">
+<form action="/put_rating">
 <button type="submit">Put rating</button>
 </form>
 </body>

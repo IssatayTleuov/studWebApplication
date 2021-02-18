@@ -12,8 +12,6 @@ public class Teacher {
     private int facultyId;
     private int userId;
 
-    int currentTeacherId = 0;
-    int currentTeacherObjId = 0;
 
     public Teacher() {
 
@@ -33,8 +31,6 @@ public class Teacher {
 
         for (Teacher t : arr) {
             if (t.getUserId() == user.getId()) {
-                currentTeacherId = t.getId();
-                currentTeacherObjId = t.getObjectId();
                 isTeacher = true;
             }
         }

@@ -12,9 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @WebServlet("/log_in")
 public class LoginServlet extends HttpServlet {
@@ -38,8 +40,17 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
+        UUID uuid = UUID.randomUUID();
+        HttpSession session = req.getSession();
+        session.setAttribute("sessionId", uuid);
+        System.out.println(session.getAttribute("sessionId"));
+
+    //        teacher03@email.com
+    //        qwertyas
+
         try {
             user = userDao.logIn(login, password);
+            userDao.updateSessionId(uuid.toString(), user.getId());
             teachers = teacherDao.getTeachUserId();
             boolean isTeacher = teacher.isTeacher(teachers, user);
             students = studentDao.getStudUserId();

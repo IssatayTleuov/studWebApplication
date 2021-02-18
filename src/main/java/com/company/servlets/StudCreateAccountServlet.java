@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class StudCreateAccountServlet extends HttpServlet {
     UserDao userDao = new UserDao();
     FacultyDao facultyDao = new FacultyDao();
     Faculty faculty = new Faculty();
+    StudentDao studentDao = new StudentDao();
     ArrayList<Faculty> faculties;
     ArrayList<User> users;
 
@@ -40,15 +42,16 @@ public class StudCreateAccountServlet extends HttpServlet {
         String phoneNumber = req.getParameter("phoneNumber");
         int course = Integer.parseInt(req.getParameter("course"));
         int facultyId = faculty.sortFaculty(faculties, req.getParameter("facultyId"));
-        StudentDao studentDao = new StudentDao();
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        UserDao userDao = new UserDao();
+
         try {
             user =  userDao.createAccount(login, password);
             users = userDao.getUsers();
             int userId = user.getUserId(users, user);
+            HttpSession session = req.getSession();
+            session.setAttribute("sessionId", user.getSessionId());
             studentDao.createAccount(name, surname, phoneNumber, course, facultyId, userId);
             resp.sendRedirect("stud_home_page.jsp");
         } catch (Exception e) {

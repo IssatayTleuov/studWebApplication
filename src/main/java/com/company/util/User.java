@@ -6,14 +6,16 @@ public class User {
     private int id;
     private String login;
     private String password;
+    private String sessionId;
 
     public User() {
 
     }
 
-    public User(String login, String password) {
+    public User(String login, String password, String sessionId) {
         this.login = login;
         this.password = password;
+        this.sessionId = sessionId;
     }
 
     public int getUserId(ArrayList<User> userList, User user) {
@@ -48,5 +50,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }
