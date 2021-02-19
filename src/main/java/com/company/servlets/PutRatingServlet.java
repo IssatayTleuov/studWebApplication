@@ -1,5 +1,6 @@
 package com.company.servlets;
 
+import com.company.database.MarkTypeDao;
 import com.company.database.ObjectDao;
 import com.company.database.TeacherDao;
 import com.company.database.UserDao;
@@ -21,16 +22,24 @@ public class PutRatingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("objectNames", new ObjectDao().getObjectNames());
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("put_rating.jsp");
-        requestDispatcher.forward(req, resp);
-
         HttpSession session = req.getSession();
         int userId = userDao.getId(session.getAttribute("sessionId").toString());
         int[] idArray = teacherDao.getObjAndTeachId(userId);
         int teacherId = idArray[0];
-        int objectId = idArray[1];
+        int objectsId = idArray[1];
+        req.setAttribute("teacherId", teacherId);
+        req.setAttribute("objectId", objectsId);
+
+        req.setAttribute("objectNames", new ObjectDao().getObjectNames());
+        req.setAttribute("markTypes", new MarkTypeDao().getMarkTypes());
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("put_rating.jsp");
+        requestDispatcher.forward(req, resp);
+
+        String objectId = req.getParameter("objects");
+        String markTypeId = req.getParameter("markTypes");
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

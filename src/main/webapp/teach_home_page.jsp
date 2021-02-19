@@ -14,7 +14,10 @@
 <label>Welcome teacher</label>
 <br><br><br>
 <form action="/put_rating">
-<button type="submit">Put rating</button>
+    <button type="submit">Put rating</button>
+</form>
+<form action="/test_ajax">
+    <button type="submit">Test AJAX</button>
 </form>
 </body>
 </html>
