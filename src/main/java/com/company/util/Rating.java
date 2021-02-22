@@ -1,5 +1,7 @@
 package com.company.util;
 
+import java.util.ArrayList;
+
 public class Rating {
 
     private int id;
@@ -9,6 +11,16 @@ public class Rating {
     private int objectId;
     private int markTypeId;
     private String time;
+
+    public ArrayList<Rating> sortRating(ArrayList<Rating> ratingList, int teacherId, int objectId, int markTypeId) {
+        ArrayList<Rating> sortedList = new ArrayList<>();
+        for (Rating r : ratingList) {
+            if (r.getTeacherId() == teacherId && r.getObjectId() == objectId && r.getMarkTypeId() == markTypeId) {
+                sortedList.add(r);
+            }
+        }
+        return sortedList;
+    }
 
     public int getId() {
         return id;

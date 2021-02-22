@@ -28,7 +28,7 @@ public class StudentDao extends Database {
         }
     }
 
-    public ArrayList<Student> getStudUserId() {
+    public ArrayList<Student> getAllUsers() {
         connection = getConnection();
         ArrayList<Student> arrayList = new ArrayList<>();
 

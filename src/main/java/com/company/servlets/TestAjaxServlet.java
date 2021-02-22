@@ -34,24 +34,8 @@ public class TestAjaxServlet extends HttpServlet {
         objectArrayList = objectDao.getObjectNames();
         int teacherId = idArray[0];
         int objectsId = idArray[1];
-        String objOperation = req.getParameter("operation");
+        String objOperation = "objects";
 
-        try {
-        if (objOperation.equals("objects")) {
-            for (int i = 0; i < objectArrayList.size(); i++) {
-                Object object = objectArrayList.get(i);
-                if (object.getId() == objectsId) {
-                    objectNames.add(object.getName());
-                }
-            }
-            String namesList = gson.toJson(objectNames);
-            resp.setContentType("text/html");
-            resp.getWriter().write(namesList);
-          } else {
-            System.out.println("Error in if statement!");
-        }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

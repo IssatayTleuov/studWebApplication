@@ -11,38 +11,54 @@
     <title>Test page</title>
 </head>
 <body>
-<form style="float: left">
-    <div class="input-field">
-        <select id="objects">
-            <option>Select object</option>
-        </select>
-    </div>
-    <div class="input-field">
-        <select id="mark-types">
-            <option>Select type of mark</option>
-        </select>
-    </div>
-</form>
-    <script type="text/javascript">
-        $(document).ready(function() {
+<script type="text/javascript">
+    var tbl = '';
+    tbl +='<table class="table table-hover">'
+
+    tbl +='<thead>';
+      tbl +='<tr>';
+      tbl +='<th>Student Name</th>';
+      tbl +='<th>Marks</th>';
+      tbl +='</tr>';
+    tbl +='</thead>';
+
+    tbl +=  '</tbody>';
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
         $.ajax({
-            url: "TestAjaxServlet",
+            url:"TestAjaxServlet",
             method: "GET",
-            data: {operation: 'objects'},
-            success: function (data) {
+            data: {operation: 'rating'},
+            success: function (data, textStatus, jqXHR) {
                 console.log(data);
-                let obj = $.parseJSON(data);
-                $.each(obj, function (key, value) {
-                    $('#objects').append('<option value="'+ value.id +'">' + value.name + '</option>')
+                let rat = $.parseJSON(data);
+                $.each(rat, function(key, value) {
+                    tbl += '<tr row_id="' + value.id + '">';
+                    tbl += '<td><div class="row_data" edit_type="click" col_name="student_name">' + value.name + '</div></td>'
+                    tbl += '<td><div class="row_data" edit_type="click" col_name="mark">' + value.mark + '</div></td>'
+
+                    tbl +='<td>';
+
+                    tbl +='<span class="btn_edit"> <a href="#" class="btn btn-link" ' + value.id +'"> Edit</a> | </span>'
+
+                    tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" ' + value.id +'"> Save</a> | </span>'
+                    tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" ' + value.id +'"> Cancel</a> | </span>'
+
+                    tbl += '</td>';
+
+                    tbl += '</tr>';
+
                 });
-                $('select').forSelect();
-            },
-            error: function () {
-                $('#objects').append('<option>Objects unavailable</option>');
-            },
-            cache: false
-        });
-    });
+            }
+        })
+    })
+</script>
+<script>
+    tbl += '</tbody>';
+
+    tbl += '</table>'
 </script>
 </body>
 </html>
