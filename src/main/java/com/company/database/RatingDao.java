@@ -31,7 +31,6 @@ public class RatingDao  extends Database{
 
                 ratingArrayList.add(rating);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

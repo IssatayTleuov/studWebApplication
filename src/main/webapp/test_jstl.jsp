@@ -16,22 +16,18 @@
 <table border="1">
     <thead>
     <td>Id</td>
-    <td>Mark</td>
-    <td>Student Id</td>
-    <td>Teacher Id</td>
-    <td>Object Id</td>
-    <td>Mark_Type Id</td>
-    <td>Time</td>
+    <td>Student Name</td>
+    <td>Mark/Monday</td>
+    <td>Mark/Tuesday</td>
+    <td>Mark/Wednesday</td>
+    <td>Mark/Thursday</td>
+    <td>Mark/Friday</td>
     </thead>
-<c:forEach var="rating" items="${ratings}">
+<c:forEach var="rating" items="${ratingList}" varStatus="theCount">
     <tr>
         <td>${rating.id}</td>
+        <td>${studentList[theCount.index]  }</td>
         <td>${rating.mark}</td>
-        <td>${rating.studentId}</td>
-        <td>${rating.teacherId}</td>
-        <td>${rating.objectId}</td>
-        <td>${rating.markTypeId}</td>
-        <td>${rating.time}</td>
     </tr>
     <br>
 </c:forEach>

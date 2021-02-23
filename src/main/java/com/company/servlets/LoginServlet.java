@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             userDao.updateSessionId(uuid.toString(), user.getId());
             teachers = teacherDao.getTeachUserId();
             boolean isTeacher = teacher.isTeacher(teachers, user);
-            students = studentDao.getAllUsers();
+            students = studentDao.getAllStudents();
             boolean isStudent = student.isStudent(students, user);
 
             if (isTeacher) {

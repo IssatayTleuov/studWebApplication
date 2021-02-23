@@ -1,11 +1,11 @@
 package com.company.servlets;
 
-import com.company.database.ObjectDao;
-import com.company.database.TeacherDao;
-import com.company.database.UserDao;
-import com.company.util.Object;
+import com.company.database.*;
+import com.company.util.Rating;
+import com.company.util.Student;
 import com.google.gson.Gson;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +18,18 @@ import java.util.ArrayList;
 @WebServlet("/test_ajax")
 public class TestAjaxServlet extends HttpServlet {
 
+    Rating rating = new Rating();
+    RatingDao ratingDao = new RatingDao();
+    Student student = new Student();
+    StudentDao studentDao = new StudentDao();
     UserDao userDao = new UserDao();
     TeacherDao teacherDao = new TeacherDao();
-    ObjectDao objectDao = new ObjectDao();
-    ArrayList<Object> objectArrayList = new ArrayList<>();
-    ArrayList<String> objectNames = new ArrayList<>();
     Gson gson = new Gson();
+    ArrayList<Rating> ratingList = new ArrayList<>();
+    ArrayList<Student> studentList = new ArrayList<>();
+    ArrayList<Rating> sortedRatingList = new ArrayList<>();
+    ArrayList<String> sortedStudentList = new ArrayList<>();
+
 
 
     @Override
@@ -31,11 +37,21 @@ public class TestAjaxServlet extends HttpServlet {
         HttpSession session = req.getSession();
         int userId = userDao.getId(session.getAttribute("sessionId").toString());
         int[] idArray = teacherDao.getObjAndTeachId(userId);
-        objectArrayList = objectDao.getObjectNames();
         int teacherId = idArray[0];
         int objectsId = idArray[1];
-        String objOperation = "objects";
+        String objOperation = req.getParameter("operation");
 
+        if (objOperation.equals("rating")) {
+            ratingList = ratingDao.getAllRating();
+            studentList = studentDao.getAllStudents();
 
+            sortedRatingList = rating.sortRating(ratingList, 3, 3, 1);
+            sortedStudentList = student.sortStudentNames(ratingList);
+
+            req.setAttribute("ratingList", sortedRatingList);
+            req.setAttribute("studentList", sortedStudentList);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("test_ajax.jsp");
+            requestDispatcher.forward(req, resp);
+        }
     }
 }

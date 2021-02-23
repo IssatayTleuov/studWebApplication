@@ -38,15 +38,17 @@ public class Student {
         return isStudent;
     }
 
-    public ArrayList<Student> sortStudentNames(ArrayList<Rating> ratingList) {
+    public ArrayList<String> sortStudentNames(ArrayList<Rating> ratingList) {
         StudentDao studentDao = new StudentDao();
-        ArrayList<Student> studentList = studentDao.getAllUsers();
-        ArrayList<Student> sortedList = new ArrayList<>();
+        ArrayList<Student> studentList = studentDao.getAllStudents();
+        ArrayList<String> sortedList = new ArrayList<>();
 
         for (int i = 0; i < ratingList.size(); i++) {
             for (int j = 0; j < studentList.size(); j++) {
                 if (ratingList.get(i).getStudentId() == studentList.get(j).getId()) {
-                    sortedList.add(studentList.get(j));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(studentList.get(j).getName() + " " + studentList.get(j).getSurname());
+                    sortedList.add(stringBuilder.toString());
                 }
             }
         }
