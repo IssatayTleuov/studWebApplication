@@ -17,6 +17,17 @@ public class Object {
         return result;
     }
 
+    public ArrayList<Object> getObjectsNames(ArrayList<Object> arr, int objectId) {
+        ArrayList<Object> sortedList = new ArrayList<>();
+
+        for (Object obj : arr) {
+            if (obj.getId() == objectId) {
+                sortedList.add(obj);
+            }
+        }
+        return sortedList;
+    }
+
     public int getId() {
         return id;
     }

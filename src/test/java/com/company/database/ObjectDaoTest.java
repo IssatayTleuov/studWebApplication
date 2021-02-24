@@ -36,7 +36,7 @@ public class ObjectDaoTest {
         try {
         ObjectDao objectDao = new ObjectDao();
         ArrayList<Object> objectArrayList = new ArrayList<>();
-        objectArrayList = objectDao.getObjectNames();
+        objectArrayList = objectDao.getAllObjects();
         Assert.assertNotNull(objectArrayList);
 //        Assert.assertThat(arrayList, IsIterableContainingInOrder.contains(nameList.toArray()));
         System.out.println("getObjectNames is not null!");

@@ -23,10 +23,12 @@
     <td>Mark/Thursday</td>
     <td>Mark/Friday</td>
     </thead>
-<c:forEach var="rating" items="${ratingList}" varStatus="theCount">
+<jsp:useBean id="ratingList" scope="request" type="java.util.List"/>
+<c:forEach var="rating" items="${ratingList}" varStatus="theCount"><jsp:useBean id="studentList" scope="request" type="java.util.List"/>
+
     <tr>
         <td>${rating.id}</td>
-        <td>${studentList[theCount.index]  }</td>
+        <td>${studentList[theCount.index]}</td>
         <td>${rating.mark}</td>
     </tr>
     <br>

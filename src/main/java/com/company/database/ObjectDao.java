@@ -32,7 +32,7 @@ public class ObjectDao extends Database {
         return objectArrayList;
     }
 
-    public ArrayList<Object> getObjectNames() {
+    public ArrayList<Object> getAllObjects() {
         connection = getConnection();
         ArrayList<Object> namesList = new ArrayList<>();
 
