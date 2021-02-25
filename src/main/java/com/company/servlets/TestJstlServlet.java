@@ -1,12 +1,10 @@
 package com.company.servlets;
 
-import com.company.database.RatingDao;
-import com.company.database.StudentDao;
-import com.company.database.TeacherDao;
-import com.company.database.UserDao;
+import com.company.database.*;
+import com.company.util.MarkType;
+import com.company.util.Object;
 import com.company.util.Rating;
 import com.company.util.Student;
-import com.google.gson.Gson;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,51 +16,63 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 @WebServlet("/test_jstl")
 public class TestJstlServlet extends HttpServlet {
 
+    int teacherId;
+    int objectsId;
+    Object object = new Object();
     Rating rating = new Rating();
-    RatingDao ratingDao = new RatingDao();
     Student student = new Student();
-    StudentDao studentDao = new StudentDao();
     UserDao userDao = new UserDao();
     TeacherDao teacherDao = new TeacherDao();
-    Gson gson = new Gson();
-    ArrayList<Rating> ratingList = new ArrayList<>();
-    ArrayList<Student> studentList = new ArrayList<>();
-    ArrayList<Rating> sortedRatingList = new ArrayList<>();
-    ArrayList<String> sortedStudentList = new ArrayList<>();
+    ObjectDao objectDao = new ObjectDao();
+    MarkTypeDao markTypeDao = new MarkTypeDao();
+    RatingDao ratingDao = new RatingDao();
+    ArrayList<Object> objectList = new ArrayList<>();
+    ArrayList<Object> sortedObjectList = new ArrayList<>();
+    ArrayList<MarkType> markTypeList = new ArrayList<>();
+    ArrayList<String> dateList = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
+        HttpSession session = req.getSession();
+        int userId = userDao.getId(session.getAttribute("sessionId").toString());
+        int[] idArray = teacherDao.getObjAndTeachId(userId);
 
-//            HttpSession session = req.getSession();
-//            int userId = userDao.getId(session.getAttribute("sessionId").toString());
-//            int[] idArray = teacherDao.getObjAndTeachId(userId);
-//            int teacherId = idArray[0];
-//            int objectsId = idArray[1];
+        teacherId = idArray[0];
+        objectsId = idArray[1];
+        objectList = objectDao.getAllObjects();
+        sortedObjectList = object.getObjectsNames(objectList, objectsId);
+        markTypeList = markTypeDao.getMarkTypes();
+        dateList = rating.getCurrentMonth();
 
-            ratingList = ratingDao.getAllRating();
-            studentList = studentDao.getAllStudents();
+        req.setAttribute("objects", sortedObjectList);
+        req.setAttribute("markTypes", markTypeList);
+        req.setAttribute("dates", dateList);
 
-            sortedRatingList = rating.sortRating(ratingList, 3, 3, 4);
-            sortedStudentList = student.sortStudentNames(ratingList);
-
-            req.setAttribute("ratingList", sortedRatingList);
-            req.setAttribute("studentList", sortedStudentList);
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("test_jstl.jsp");
-            requestDispatcher.forward(req, resp);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-         }
-
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/test_jstl.jsp");
+        requestDispatcher.forward(req, resp);
     }
+
+    //        teacher03@email.com
+    //        qwertyas
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        int object = Integer.parseInt(req.getParameter("objects"));
+        int markType = Integer.parseInt(req.getParameter("mark_type"));
+        String date = req.getParameter("date");
+
+        ArrayList<Rating> ratingList = ratingDao.getAllRating();
+        ArrayList<Rating> sortedRatingList = rating.sortRating(ratingList, teacherId, object, markType, date);
+        ArrayList<String> sortedStudentList = student.sortStudentNames(sortedRatingList);
+
+        req.setAttribute("ratings", sortedRatingList);
+        req.setAttribute("students", sortedStudentList);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/test_jstl.jsp");
+        requestDispatcher.forward(req, resp);
+
     }
 }

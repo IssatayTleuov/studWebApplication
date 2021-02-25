@@ -16,8 +16,8 @@
 <form action="/put_rating">
     <button type="submit">Put rating</button>
 </form>
-<form action="/test_ajax_2">
-    <button type="submit">Test AJAX</button>
+<form action="/test_jstl">
+    <button type="submit">Test JSTL</button>
 </form>
 </body>
 </html>

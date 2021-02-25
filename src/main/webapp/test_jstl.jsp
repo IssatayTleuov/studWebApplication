@@ -11,29 +11,50 @@
 <head>
     <title>Test JSTL</title>
 </head>
-<body>
-<div align="center">
-<table border="1">
-    <thead>
-    <td>Id</td>
-    <td>Student Name</td>
-    <td>Mark/Monday</td>
-    <td>Mark/Tuesday</td>
-    <td>Mark/Wednesday</td>
-    <td>Mark/Thursday</td>
-    <td>Mark/Friday</td>
-    </thead>
-<jsp:useBean id="ratingList" scope="request" type="java.util.List"/>
-<c:forEach var="rating" items="${ratingList}" varStatus="theCount"><jsp:useBean id="studentList" scope="request" type="java.util.List"/>
-
-    <tr>
-        <td>${rating.id}</td>
-        <td>${studentList[theCount.index]}</td>
-        <td>${rating.mark}</td>
-    </tr>
-    <br>
-</c:forEach>
-</table>
+<body onload="form1.submit();">
+<form action="/test_jstl" method="post" style="float: left">
+<div style="float: left">
+    <select name="objects" id="objects">
+        <option value="-1">Select object</option>
+        <c:forEach var="object"  items="${objects}">
+            <option value="${object.id}">${object.name}</option>
+        </c:forEach>
+    </select>
 </div>
+<div style="float: left">
+    <select name="mark_type" id="mark_type">
+        <option value="-1">Select type of mark</option>
+        <c:forEach var="markType"  items="${markTypes}">
+            <option value="${markType.id}">${markType.name}</option>
+        </c:forEach>
+    </select>
+</div>
+<div style="float: left">
+    <select name="date" id="date">
+        <option <%--value="-1"--%>>Select date</option>
+        <c:forEach var="date"  items="${dates}" varStatus="loop">
+            <option <%--value="${loop.index}"--%>>${date}</option>
+        </c:forEach>
+    </select>
+</div>
+    <button type="submit">Show marks</button>
+</form>
+<form>
+    <table>
+        <thead>
+        <td>Id</td>
+        <td>Student Name</td>
+        <td>Mark</td>
+        </thead>
+
+        <tr>
+            <c:forEach var="rating" items="${ratings}" varStatus="count">
+                <td>${students[count.index]}</td>
+                <td>${students}</td>
+                <td>${rating.mark}</td>
+            </c:forEach>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

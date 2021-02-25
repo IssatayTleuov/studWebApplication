@@ -1,5 +1,7 @@
 package com.company.util;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Rating {
@@ -10,16 +12,34 @@ public class Rating {
     private int teacherId;
     private int objectId;
     private int markTypeId;
-    private String time;
+    private String date;
 
-    public ArrayList<Rating> sortRating(ArrayList<Rating> ratingList, int teacherId, int objectId, int markTypeId) {
+    public ArrayList<Rating> sortRating(ArrayList<Rating> ratingList, int teacherId, int objectId, int markTypeId, String date) {
         ArrayList<Rating> sortedList = new ArrayList<>();
         for (Rating r : ratingList) {
-            if (r.getTeacherId() == teacherId && r.getObjectId() == objectId && r.getMarkTypeId() == markTypeId) {
+            if (r.getTeacherId() == teacherId && r.getObjectId() == objectId && r.getMarkTypeId() == markTypeId && r.getDate().equals(date)) {
                 sortedList.add(r);
             }
         }
         return sortedList;
+    }
+
+    public ArrayList<String> getCurrentMonth() {
+        LocalDate start = LocalDate.now().withDayOfMonth(1);
+        LocalDate end = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        ArrayList<String> dates = new ArrayList<>();
+        while(start.isBefore(end)) {
+            String formattedStr = start.format(formatter);
+            dates.add(formattedStr);
+            start = start.plusDays(1);
+        }
+        String current = end.format(formatter);
+        dates.add(current);
+
+        return dates;
     }
 
     public int getId() {
@@ -70,11 +90,11 @@ public class Rating {
         this.markTypeId = markTypeId;
     }
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String time) {
+        this.date = date;
     }
 }
