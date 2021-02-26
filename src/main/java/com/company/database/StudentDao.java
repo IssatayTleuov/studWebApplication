@@ -12,19 +12,18 @@ public class StudentDao extends Database {
 
     Connection connection;
 
-    public void createAccount(String name, String surname, String phoneNumber, int course, int facultyId, int userId) throws SQLException {
+    public void createAccount(String fullName, String phoneNumber, int course, int facultyId, int userId) throws SQLException {
         connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO students (name, surname, phone_number, course, faculty_id, user_id) VALUES (?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, name);
-        preparedStatement.setString(2, surname);
-        preparedStatement.setString(3, phoneNumber);
-        preparedStatement.setInt(4, course);
-        preparedStatement.setInt(5, facultyId);
-        preparedStatement.setInt(6, userId);
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO students (fullname, phone_number, course, faculty_id, user_id) VALUES (?, ?, ?, ?, ?)");
+        preparedStatement.setString(1, fullName);
+        preparedStatement.setString(2, phoneNumber);
+        preparedStatement.setInt(3, course);
+        preparedStatement.setInt(4, facultyId);
+        preparedStatement.setInt(5, userId);
         int rows = preparedStatement.executeUpdate();
 
         if (rows > 0) {
-            Student student = new Student(name, surname, phoneNumber, course, facultyId, userId);
+            Student student = new Student(fullName, phoneNumber, course, facultyId, userId);
         }
     }
 
@@ -39,12 +38,12 @@ public class StudentDao extends Database {
             while (resultSet.next()) {
                 Student student = new Student();
                 student.setId(resultSet.getInt(1));
-                student.setName(resultSet.getString(2));
-                student.setSurname(resultSet.getString(3));
-                student.setPhoneNumber(resultSet.getString(4));
-                student.setCourse(resultSet.getInt(5));
-                student.setFacultyId(resultSet.getInt(6));
-                student.setUserId(resultSet.getInt(7));
+                student.setPhoneNumber(resultSet.getString(2));
+                student.setCourse(resultSet.getInt(3));
+                student.setFacultyId(resultSet.getInt(4));
+                student.setUserId(resultSet.getInt(5));
+                student.setFullName(resultSet.getString(6));
+                student.setObjectsId(resultSet.getString(7));
 
                 arrayList.add(student);
             }

@@ -27,7 +27,7 @@ public class RatingDao  extends Database{
                 rating.setTeacherId(resultSet.getInt(4));
                 rating.setObjectId(resultSet.getInt(5));
                 rating.setMarkTypeId(resultSet.getInt(6));
-                rating.setDate(resultSet.getString(7));
+                rating.setDate(resultSet.getDate(7));
 
                 ratingArrayList.add(rating);
             }

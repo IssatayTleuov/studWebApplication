@@ -1,8 +1,11 @@
 package com.company.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Rating {
 
@@ -12,12 +15,14 @@ public class Rating {
     private int teacherId;
     private int objectId;
     private int markTypeId;
-    private String date;
+    private Date date;
 
     public ArrayList<Rating> sortRating(ArrayList<Rating> ratingList, int teacherId, int objectId, int markTypeId, String date) {
         ArrayList<Rating> sortedList = new ArrayList<>();
+        DateFormat  dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         for (Rating r : ratingList) {
-            if (r.getTeacherId() == teacherId && r.getObjectId() == objectId && r.getMarkTypeId() == markTypeId && r.getDate().equals(date)) {
+            String databaseDate = dateFormat.format(r.getDate());
+            if (r.getTeacherId() == teacherId && r.getObjectId() == objectId && r.getMarkTypeId() == markTypeId && databaseDate.equals(date)) {
                 sortedList.add(r);
             }
         }
@@ -90,11 +95,11 @@ public class Rating {
         this.markTypeId = markTypeId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String time) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

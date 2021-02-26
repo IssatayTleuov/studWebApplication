@@ -7,24 +7,33 @@ import java.util.ArrayList;
 public class Student {
 
     private int id;
-    private String name;
-    private String surname;
+    private String fullName;
     private String phoneNumber;
     private int course;
     private int facultyId;
     private int userId;
+    private String objectsId;
 
     public Student() {
 
     }
 
-    public Student(String name, String surname, String phoneNumber, int course, int facultyId, int userId) {
-        this.name = name;
-        this.surname = surname;
+    public Student(String fullName, String phoneNumber, int course, int facultyId, int userId) {
+        this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.course = course;
         this.facultyId = facultyId;
         this.userId = userId;
+
+    }
+
+    public Student(String fullName, String phoneNumber, int course, int facultyId, int userId, String objectsId) {
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.course = course;
+        this.facultyId = facultyId;
+        this.userId = userId;
+        this.objectsId = objectsId;
     }
 
     public boolean isStudent(ArrayList<Student> arr, User user) {
@@ -38,17 +47,21 @@ public class Student {
         return isStudent;
     }
 
-    public ArrayList<String> sortStudentNames(ArrayList<Rating> ratingList) {
-        StudentDao studentDao = new StudentDao();
-        ArrayList<Student> studentList = studentDao.getAllStudents();
+    public ArrayList<String> sortStudentNames(ArrayList<Rating> ratingList, ArrayList<Student> studentList, int currentObjectId) {
         ArrayList<String> sortedList = new ArrayList<>();
 
         for (int i = 0; i < ratingList.size(); i++) {
             for (int j = 0; j < studentList.size(); j++) {
                 if (ratingList.get(i).getStudentId() == studentList.get(j).getId()) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(studentList.get(j).getName() + " " + studentList.get(j).getSurname());
-                    sortedList.add(stringBuilder.toString());
+                    sortedList.add(studentList.get(i).getFullName());
+                String strObjectsId = studentList.get(j).getObjectsId();
+                String[] array = strObjectsId.split(",");
+                for (int k = 0; k < array.length; k++) {
+                    int objectId = Integer.parseInt(array[k]);
+                    if (currentObjectId == objectId) {
+                        sortedList.add(studentList.get(i).getFullName());
+                    }
+                }
                 }
             }
         }
@@ -63,20 +76,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
@@ -109,5 +114,13 @@ public class Student {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getObjectsId() {
+        return objectsId;
+    }
+
+    public void setObjectsId(String objectsId) {
+        this.objectsId = objectsId;
     }
 }

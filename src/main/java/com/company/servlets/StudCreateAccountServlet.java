@@ -39,6 +39,8 @@ public class StudCreateAccountServlet extends HttpServlet {
 
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
+        StringBuilder stringBuilder = new StringBuilder(name + " " + surname);
+        String fullName = stringBuilder.toString();
         String phoneNumber = req.getParameter("phoneNumber");
         int course = Integer.parseInt(req.getParameter("course"));
         int facultyId = faculty.sortFaculty(faculties, req.getParameter("facultyId"));
@@ -52,7 +54,7 @@ public class StudCreateAccountServlet extends HttpServlet {
             int userId = user.getUserId(users, user);
             HttpSession session = req.getSession();
             session.setAttribute("sessionId", user.getSessionId());
-            studentDao.createAccount(name, surname, phoneNumber, course, facultyId, userId);
+            studentDao.createAccount(fullName, phoneNumber, course, facultyId, userId);
             resp.sendRedirect("stud_home_page.jsp");
         } catch (Exception e) {
             System.out.println("Exception" + " " + e.getMessage());

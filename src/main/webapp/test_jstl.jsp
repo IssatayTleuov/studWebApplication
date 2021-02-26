@@ -6,12 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
     <title>Test JSTL</title>
 </head>
-<body onload="form1.submit();">
+<body>
 <form action="/test_jstl" method="post" style="float: left">
 <div style="float: left">
     <select name="objects" id="objects">
@@ -25,7 +26,7 @@
     <select name="mark_type" id="mark_type">
         <option value="-1">Select type of mark</option>
         <c:forEach var="markType"  items="${markTypes}">
-            <option value="${markType.id}">${markType.name}</option>
+            <option value="${markType.id}"}>${markType.name}</option>
         </c:forEach>
     </select>
 </div>
@@ -39,22 +40,21 @@
 </div>
     <button type="submit">Show marks</button>
 </form>
-<form>
-    <table>
+</body><form action="/test_jstl" method="get">
+    <table align="center" border="1">
         <thead>
         <td>Id</td>
         <td>Student Name</td>
         <td>Mark</td>
         </thead>
-
-        <tr>
-            <c:forEach var="rating" items="${ratings}" varStatus="count">
+        <c:forEach var="rating" items="${ratings}" varStatus="count">
+            <tr>
+                <td>${rating.id}</td>
                 <td>${students[count.index]}</td>
-                <td>${students}</td>
                 <td>${rating.mark}</td>
-            </c:forEach>
-        </tr>
+            </tr>
+        </c:forEach>
     </table>
 </form>
-</body>
+
 </html>

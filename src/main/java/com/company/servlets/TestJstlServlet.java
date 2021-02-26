@@ -30,6 +30,7 @@ public class TestJstlServlet extends HttpServlet {
     ObjectDao objectDao = new ObjectDao();
     MarkTypeDao markTypeDao = new MarkTypeDao();
     RatingDao ratingDao = new RatingDao();
+    StudentDao studentDao = new StudentDao();
     ArrayList<Object> objectList = new ArrayList<>();
     ArrayList<Object> sortedObjectList = new ArrayList<>();
     ArrayList<MarkType> markTypeList = new ArrayList<>();
@@ -48,9 +49,14 @@ public class TestJstlServlet extends HttpServlet {
         markTypeList = markTypeDao.getMarkTypes();
         dateList = rating.getCurrentMonth();
 
-        req.setAttribute("objects", sortedObjectList);
-        req.setAttribute("markTypes", markTypeList);
-        req.setAttribute("dates", dateList);
+//        req.setAttribute("objects", sortedObjectList);
+//        req.setAttribute("markTypes", markTypeList);
+//        req.setAttribute("dates", dateList);
+
+        HttpSession sessionDrop = req.getSession();
+        sessionDrop.setAttribute("objects", sortedObjectList);
+        sessionDrop.setAttribute("markTypes", markTypeList);
+        sessionDrop.setAttribute("dates", dateList);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/test_jstl.jsp");
         requestDispatcher.forward(req, resp);
@@ -65,9 +71,14 @@ public class TestJstlServlet extends HttpServlet {
         int markType = Integer.parseInt(req.getParameter("mark_type"));
         String date = req.getParameter("date");
 
+        System.out.println(object);
+        System.out.println(markType);
+        System.out.println(date);
+
         ArrayList<Rating> ratingList = ratingDao.getAllRating();
+        ArrayList<Student> studentList = studentDao.getAllStudents();
         ArrayList<Rating> sortedRatingList = rating.sortRating(ratingList, teacherId, object, markType, date);
-        ArrayList<String> sortedStudentList = student.sortStudentNames(sortedRatingList);
+        ArrayList<String> sortedStudentList = student.sortStudentNames(sortedRatingList, studentList, object);
 
         req.setAttribute("ratings", sortedRatingList);
         req.setAttribute("students", sortedStudentList);
