@@ -37,6 +37,20 @@ public class RatingDao  extends Database{
         return ratingArrayList;
     }
 
+    public void updateMark(int ratingId, int mark) {
+        connection = getConnection();
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE rating SET mark = ? WHERE id = ?");
+            preparedStatement.setInt(1, mark);
+            preparedStatement.setInt(2, ratingId);
+            int rows = preparedStatement.executeUpdate();
+            if (rows == 1) {
+                System.out.println("Mark was successfully updated!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

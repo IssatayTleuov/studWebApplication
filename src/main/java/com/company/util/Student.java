@@ -53,13 +53,12 @@ public class Student {
         for (int i = 0; i < ratingList.size(); i++) {
             for (int j = 0; j < studentList.size(); j++) {
                 if (ratingList.get(i).getStudentId() == studentList.get(j).getId()) {
-                    sortedList.add(studentList.get(i).getFullName());
                 String strObjectsId = studentList.get(j).getObjectsId();
                 String[] array = strObjectsId.split(",");
                 for (int k = 0; k < array.length; k++) {
                     int objectId = Integer.parseInt(array[k]);
                     if (currentObjectId == objectId) {
-                        sortedList.add(studentList.get(i).getFullName());
+                        sortedList.add(studentList.get(j).getFullName());
                     }
                 }
                 }

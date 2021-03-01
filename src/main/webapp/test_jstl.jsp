@@ -52,6 +52,7 @@
                 <td>${rating.id}</td>
                 <td>${students[count.index]}</td>
                 <td>${rating.mark}</td>
+                <td><a name="edit_link" href="/edit_mark.jsp?ratingId=${rating.id}" methods="puts">Edit</a></td>
             </tr>
         </c:forEach>
     </table>
